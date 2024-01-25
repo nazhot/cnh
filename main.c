@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
-
 
 int main( int argc, char *argv[] ) {
 
@@ -12,11 +10,11 @@ int main( int argc, char *argv[] ) {
     for ( int i = 1; i < argc; ++i ) {
         char *fileName = argv[i];
         printf( "%s\n", fileName );
-        char headerFileName[256];
-        char sourceFileName[256];
-        char headerDefine[256];
+        char headerFileName[FILENAME_MAX];
+        char sourceFileName[FILENAME_MAX];
+        char headerDefine[FILENAME_MAX];
         unsigned int charPosition = 0;
-        while ( *fileName && charPosition < 256 ) {
+        while ( *fileName && charPosition < FILENAME_MAX ) {
             headerFileName[charPosition] = *fileName;
             sourceFileName[charPosition] = *fileName;
             if ( *fileName >= 97 && *fileName <= 122 ) {
