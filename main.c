@@ -9,10 +9,9 @@ int main( int argc, char *argv[] ) {
 
     for ( int i = 1; i < argc; ++i ) {
         char *fileName = argv[i];
-        printf( "%s\n", fileName );
-        char headerFileName[FILENAME_MAX];
-        char sourceFileName[FILENAME_MAX];
-        char headerDefine[FILENAME_MAX];
+        char headerFileName[FILENAME_MAX] = {0};
+        char sourceFileName[FILENAME_MAX] = {0};
+        char headerDefine[FILENAME_MAX] = {0};
         unsigned int charPosition = 0;
         while ( *fileName && charPosition < FILENAME_MAX ) {
             headerFileName[charPosition] = *fileName;
