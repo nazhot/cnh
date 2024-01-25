@@ -14,19 +14,38 @@ int main( int argc, char *argv[] ) {
         printf( "%s\n", fileName );
         char headerFileName[256];
         char sourceFileName[256];
+        char headerDefine[256];
         unsigned int charPosition = 0;
-        while ( *fileName ) {
+        while ( *fileName && charPosition < 256 ) {
             headerFileName[charPosition] = *fileName;
-            sourceFileName[charPosition++] = *fileName;
-            fileName++;
+            sourceFileName[charPosition] = *fileName;
+            if ( *fileName >= 97 && *fileName <= 122 ) {
+                *fileName -= 32;
+            }
+            headerDefine[charPosition++] = *fileName++;
         }
         headerFileName[charPosition] = '.';
-        sourceFileName[charPosition++] = '.';
+        sourceFileName[charPosition] = '.';
+        headerDefine[charPosition++] = '_';
         headerFileName[charPosition] = 'h';
-        sourceFileName[charPosition++] = 'c';
+        sourceFileName[charPosition] = 'c';
+        headerDefine[charPosition++] = 'H';
         
         FILE *headerFile = fopen( headerFileName, "w" );
         FILE *sourceFile = fopen( sourceFileName, "w" );
+
+        fprintf( headerFile,
+                "#ifndef %s\n"
+                "#define %s\n\n"
+                "#endif", headerDefine, headerDefine );
+
+        fprintf( sourceFile,
+                "#include \"%s\"\n"
+                "#include <stdio.h>\n"
+                "#include <stdlib.h>\n", headerFileName );
+
+        fclose( headerFile );
+        fclose( sourceFile );
     }
 
     return 0;
